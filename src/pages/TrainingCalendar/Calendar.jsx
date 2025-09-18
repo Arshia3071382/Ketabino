@@ -118,17 +118,27 @@ function Calendar() {
 
     // اگر کلاسی برای حذف وجود دارد
     if (classesToRemove.length > 0) {
-      // حذف از state
+  
       setCalendar(prev => prev.filter(item => !classesToRemove.includes(item.id)));
       
-      // حذف از دیتابیس
+      
       classesToRemove.forEach(id => {
         axios.delete(`http://localhost:8000/training/${id}`)
           .then(() => console.log(`کلاس با شناسه ${id} حذف شد`))
           .catch(err => console.error("خطا در حذف کلاس:", err));
       });
     }
+
   };
+
+  const handleDelete = async (id) =>{
+    try{
+      axios.delete(`http://localhost:8000/training/${id}`)
+      setCalendar(calendar.filter((item) => item.id !== id))
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   if (loading) {
     return (
@@ -176,7 +186,17 @@ function Calendar() {
           {sortedCalendar && sortedCalendar.length > 0 ? (
             sortedCalendar.map((item) => (
               <div key={item.id} className={style.cardCalendarWrapper}>
+                {auth.role === "admin" && (
+                   <button
+                   className={style.removeCardtn}
+                   onClick={() => handleDelete(item.id)}
+
+                   >
+                   x
+                  </button>
+                  )}
                 <div className={`${style.grade} ${style[item.type]}`}>
+                  
                   <h4>{item.grade}</h4>
                 </div>
                 <div className={style.classInfo}>

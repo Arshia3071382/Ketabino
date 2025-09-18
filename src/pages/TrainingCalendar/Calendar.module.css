@@ -68,7 +68,13 @@ align-items: center;
   font-family: "Iran Sans", sans-serif;
   text-align: center;
 }
-
+.removeCardtn{
+  background: red;
+}
+.removeCardtn:hover{
+  background: rgb(179, 20, 15);
+  box-shadow: 0px 3px 5px #ccc;
+}
 .grade {
   width: 100%;
   border-radius: 10px 10px 0 0;

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { toGregorian } from "jalaali-js";
-import  style from "./AddModalClass.module.css";
+import style from "./AddModalClass.module.css";
 
 export default function AddModalClass({ isOpen, onClose, onAdd }) {
   const [title, setTitle] = useState("");
@@ -13,28 +13,26 @@ export default function AddModalClass({ isOpen, onClose, onAdd }) {
 
   if (!isOpen) return null;
 
-
   const convertToGregorian = (persianDate, time) => {
-  
-    const dateParts = persianDate.split('/');
+    const dateParts = persianDate.split("/");
     if (dateParts.length !== 3) {
       alert("فرمت تاریخ صحیح نیست. لطفاً از فرمت yyyy/mm/dd استفاده کنید.");
       return null;
     }
-    
+
     const jYear = parseInt(dateParts[0]);
     const jMonth = parseInt(dateParts[1]);
     const jDay = parseInt(dateParts[2]);
-    
+
     // تقسیم رشته زمان به ساعت و دقیقه
-    const timeParts = time.split(':');
+    const timeParts = time.split(":");
     const hours = parseInt(timeParts[0]);
     const minutes = parseInt(timeParts[1]);
-    
+
     try {
       // تبدیل تاریخ شمسی به میلادی
       const gregorianDate = toGregorian(jYear, jMonth, jDay);
-      
+
       // ایجاد تاریخ میلادی با زمان
       const finalDate = new Date(
         gregorianDate.gy,
@@ -43,7 +41,7 @@ export default function AddModalClass({ isOpen, onClose, onAdd }) {
         hours,
         minutes
       );
-      
+
       return finalDate.getTime();
     } catch (error) {
       alert("تاریخ وارد شده معتبر نیست.");
@@ -74,10 +72,20 @@ export default function AddModalClass({ isOpen, onClose, onAdd }) {
 
     onAdd(newClass);
     onClose();
+    ResetModalInput()
+  };
+  const ResetModalInput = () => {
+    setTitle("");
+    setTeacher("");
+    setLocation("");
+    setGrade("");
+    setPersianDate("");
+    setTime("");
+    setType("");
   };
 
   return (
-     <div className={style.modalBackdrop} onClick={onClose}>
+    <div className={style.modalBackdrop} onClick={onClose}>
       <div className={style.modalContent} onClick={(e) => e.stopPropagation()}>
         <h2>افزودن کلاس جدید</h2>
 
@@ -99,7 +107,7 @@ export default function AddModalClass({ isOpen, onClose, onAdd }) {
           />
         </div>
 
-          <div className={style.field}>
+        <div className={style.field}>
           <label>ساعت (hh:mm)</label>
           <input
             type="text"
@@ -108,7 +116,6 @@ export default function AddModalClass({ isOpen, onClose, onAdd }) {
             onChange={(e) => setTime(e.target.value)}
           />
         </div>
-
 
         <div className={style.field}>
           <label>تاریخ (شمسی)</label>
@@ -175,11 +182,11 @@ export default function AddModalClass({ isOpen, onClose, onAdd }) {
         </div>
 
         <div className={style.buttonGroup}>
-          <button className={style.cancelButton} onClick={onClose}>
-            انصراف
-          </button>
           <button className={style.registerClass} onClick={handleSubmit}>
             ثبت کلاس
+          </button>
+          <button className={style.cancelButton} onClick={onClose}>
+            انصراف
           </button>
         </div>
       </div>

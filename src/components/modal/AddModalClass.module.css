@@ -80,7 +80,16 @@
   background: #0056b3;
 }
 
-/* انیمیشن باز شدن مودال */
+.cancelButton{
+  background: red;
+  width: 100%;
+}
+.cancelButton:hover{  
+  background: red;
+  box-shadow: 0px 3px 5px #949393;
+
+}
+
 @keyframes fadeIn {
   from {
     transform: scale(0.95);

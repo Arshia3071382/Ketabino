@@ -1,20 +1,20 @@
 import { Link, Routes, useParams, useSearchParams } from "react-router-dom";
-import Navbar from "../../components/navbar/Navbar"
-import style from "./Home.module.css"
-import search from "./../../assest/pic/search_24dp_EA3323_FILL0_wght400_GRAD0_opsz24.svg"
+import Navbar from "../../components/navbar/Navbar";
+import style from "./Home.module.css";
+import search from "./../../assest/pic/search_24dp_EA3323_FILL0_wght400_GRAD0_opsz24.svg";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import Article from "../../components/article/Article";
 import ReserveModal from "../../components/modal/ReserveModal";
 import { AppContext } from "../../App";
 
-function Home(){
-
-      const{isLogin} = useContext(AppContext)
-      const [article, setArticle] = useState([]);
-      const [searchTerm, setSearchTerm] = useState("");
-      const [open , setOpen] = useState(false)
-      useEffect(() => {
+function Home() {
+  const {auth, setAuth} = useContext(AppContext);
+  const { isLogin } = useContext(AppContext);
+  const [article, setArticle] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
     axios
       .get("http://localhost:8001/article")
       .then((res) => {
@@ -27,10 +27,17 @@ function Home(){
     (art) =>
       art.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       art.author.toLowerCase().includes(searchTerm.toLowerCase())
-    
   );
-  
-   return (
+
+   const handleDelete = async (id) =>{
+    try{
+      axios.delete(`http://localhost:8001/article/${id}`)
+      setArticle(article.filter((item) => item.id !== id))
+    } catch (err) {
+      console.log(err)
+    }
+  }
+  return (
     <div className={style.homeWrapper}>
       <Navbar />
       <div className={style.searchWrapper}>
@@ -51,19 +58,24 @@ function Home(){
 
       <div className={style.articleCard}>
         {filteredArticles.length > 0 ? (
-          filteredArticles.map((article) => (
-            
-              <Article article={article}/>
+          filteredArticles.map((art) => (
+            <div className={style.bookCardWrapper} key={art.id}>
+              {auth.role === "admin" && (
+                <button
+                className={style.removeBookbtn}
+                onClick={() => handleDelete(art.id)}>
+                  x
+                </button>
+              )}
+              <Article article={art} />
+            </div>
           ))
         ) : (
-         <p>😕 !هیچ کتابی مطابق جستجوی شما پیدا نشد، دوباره امتحان کنید ✨</p>
-
+          <p>😕 !هیچ کتابی مطابق جستجوی شما پیدا نشد...</p>
         )}
       </div>
-
-     
     </div>
   );
 }
 
-export default Home
+export default Home;
