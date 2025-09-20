@@ -7,6 +7,7 @@ import { useContext, useEffect, useState } from "react";
 import Article from "../../components/article/Article";
 import ReserveModal from "../../components/modal/ReserveModal";
 import { AppContext } from "../../App";
+import BookInfo from "../bookInfo/BookInfo";
 
 function Home() {
   const {auth, setAuth} = useContext(AppContext);
@@ -68,6 +69,7 @@ function Home() {
                 </button>
               )}
               <Article article={art} />
+              
             </div>
           ))
         ) : (

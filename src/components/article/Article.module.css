@@ -54,3 +54,9 @@ button:disabled {
   box-shadow: none;
   transform: none;
 }
+.bookInfoBtn{
+  background: rgb(26, 138, 231);
+}
+.bookInfoBtn:hover{
+  background: rgb(23, 101, 203);
+}
