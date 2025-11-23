@@ -10,7 +10,7 @@ export default function BookInfo() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8001/article/${id}`)
+      .get(`http://localhost:8000/article/${id}`)
       .then((res) => {
         setBook(res.data);
         console.log(res.data);

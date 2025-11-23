@@ -89,7 +89,7 @@ function Calendar() {
 
   const fetchCalendarData = () => {
     axios
-      .get("http://localhost:8000/training")
+      .get("http://localhost:8001/training")
       .then((res) => {
         setCalendar(res.data);
         setLoading(false);

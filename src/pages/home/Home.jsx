@@ -17,7 +17,7 @@ function Home() {
   const [open, setOpen] = useState(false);
   useEffect(() => {
     axios
-      .get("http://localhost:8001/article")
+      .get("http://localhost:8000/article")
       .then((res) => {
         setArticle(res.data);
       })

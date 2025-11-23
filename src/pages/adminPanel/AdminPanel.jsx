@@ -40,7 +40,7 @@ export default function AdminPanel() {
     setSubmitStatus(null);
 
     axios
-      .post("http://localhost:8001/article", {
+      .post("http://localhost:8000/article", {
         title: data.title,
         author: data.author,
         image_url: data.image_url,
